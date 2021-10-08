@@ -14,8 +14,15 @@ app.use((req, res) => {
     res.status(404).end()
 })
 
-// routes 
-
 app.listen(PORT, () => {
     console.log(`Server rendering on port ${PORT}!`)
 })
+
+// Start server after DB connection
+db.connect(err => {
+    if (err) throw err
+    console.log('Database connected.')
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`)
+    })
+  })
