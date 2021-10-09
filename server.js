@@ -138,6 +138,76 @@ addRole = () => {
     })
 }
 
+addEmployee = () => {
+    inquirer.prompt([
+        {
+           name: 'employeeFirstName',
+           message: 'What is the first name of the employee you want to add?',
+           type: 'input', 
+           validate: answer => {
+               if (!answer) {
+                   return false
+               } else {
+                   return true
+               }
+           }
+        },
+        {
+            name: 'employeeLastName',
+            message: 'What is the last name of the employee you want to add?',
+            type: 'input', 
+            validate: answer => {
+                if (!answer) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+         },
+        {
+            name: 'employeeRole',
+            message: 'What is the role for this employee?',
+            type: 'input',
+            validate: answer => {
+                if (!answer) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        },
+        {
+            name: 'employeeManager',
+            message: 'Who is the manager for this employee?',
+            type: 'input',
+            validate: answer => {
+                if (!answer) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+    ]).then(answer => {
+        const {employeeFirstName, employeeLastName, employeeRole, employeeManager} = answer
+
+        const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`
+        params = [employeeFirstName.trim(), employeeLastName.trim(), employeeRole.trim(), employeeManager]
+        
+        db.query(sql, params, (err, results) => {
+               if (err) {
+                return console.log(err.message)
+            }
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            console.log('You have successfully added an employee')
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            return promptUser()
+        })
+    })
+}
+
 promptUser = () => {
     inquirer.prompt([
         {
@@ -169,6 +239,9 @@ promptUser = () => {
                 break
             case "add a role":
                 addRole()
+                break
+            case "add an employee":
+                addEmployee()
                 break
         }
     }).catch(err => console.log(err))
