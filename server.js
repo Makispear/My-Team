@@ -11,52 +11,21 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 
-let choice = (answer) => {
-    const options = {
-        "view all departments": viewDep(),
-        // "view all roles": viewDRoles(answer),
-        // "view all employees": viewEmployees(answer),
-        // "add a department": addDep(answer),
-        // "add a role": addRole(answer),
-        // "add an employee": viewDep(answer),
-        // "update an employee role": viewDep(answer)
-    };
-    return options[answer];
-}
-
-
 viewDep = () => {
-    app.get('/api/departments', (req, res) => {
+
         const sql = `SELECT * FROM departments`
     
         db.query(sql, (err, rows) => {
             if (err) {
                 return res.status(500).json({error: err.message})
             }
-            return res.json({
-                message: 'success',
-                data: rows
-            })
+            console.table(rows)
         })
-    })
 }
 
-// app.get('/api/departments', (req, res) => {
-//     const sql = `SELECT * FROM departments`
-
-//     db.query(sql, (err, rows) => {
-//         if (err) {
-//             return res.status(500).json({error: err.message})
-//         }
-//         return res.json({
-//             message: 'success',
-//             data: rows
-//         })
-//     })
-// })
 
 promptUser = () => {
-    return inquirer.prompt([
+    inquirer.prompt([
         {
             name: 'mainList',
             message: 'What would you like to do?',
@@ -71,10 +40,16 @@ promptUser = () => {
                 "update an employee role"]
         }
     ]).then(answer => {
-        return choice(answer)
+        switch(answer.mainList){
+          case "view all departments":  
+             viewDep() 
+             break;
+          case "view all roles":
+             
+             break;
+        }
     }).catch(err => console.log(err))
 } 
-
 
 
 // return error for unknown urls 
