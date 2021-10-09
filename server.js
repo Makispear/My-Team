@@ -1,22 +1,14 @@
 const inquirer = require('inquirer')
 const db = require('./db/connection')
-const cTable = require('console.table');
-// const apiRoutes = require('./routes/apiRoutes')
-// EXPRESS
-const express = require('express')
-const app = express()
-const PORT = process.env.PORT || 3001
-// Express middleware
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-
+const cTable = require('console.table')
+// const inputCheck = require('./utils/inputCheck')
 
 viewDepartments = () => {
     const sql = `SELECT * FROM departments`
 
     db.query(sql, (err, rows) => {
         if (err) {
-            return res.status(500).json({error: err.message})
+            return console.log(err.message)
         }
         console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
         console.log("\nDEPARTMENTS:\n")
@@ -31,7 +23,7 @@ viewRoles = () => {
 
     db.query(sql, (err, rows) => {
         if (err) {
-            return res.status(500).json({error: err.message})
+            return console.log(err.message)
         }
         console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
         console.log("\nRoles:\n")
@@ -46,7 +38,7 @@ viewEmployees = () => {
 
     db.query(sql, (err, rows) => {
         if (err) {
-            return res.status(500).json({error: err.message})
+            return console.log(err.message)
         }
         console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
         console.log("\nEmployees:\n")
@@ -56,6 +48,38 @@ viewEmployees = () => {
     })
 }
 
+addDepartment = () => {
+    inquirer.prompt([
+        {
+           name: 'addDepartment',
+           message: 'What is the name of the department you want to add?',
+           type: 'input', 
+           validate: answer => {
+               if (!answer) {
+                   return false
+               } else {
+                   return true
+               }
+           }
+        }
+    ]).then(answer => {
+        const sql = `INSERT INTO departments (name) VALUES (?)`
+        params = answer.addDepartment.trim()
+        
+        db.query(sql, params, (err, results) => {
+            if (err) {
+                return console.log(err.message)
+            }
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            console.log('You have successfully added a department')
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            return promptUser()
+        })
+    })
+   
+}
 
 promptUser = () => {
     inquirer.prompt([
@@ -76,34 +100,19 @@ promptUser = () => {
         switch(answer.mainList){
             case "view all departments":  
                 viewDepartments() 
-                break;
+                break
             case "view all roles":
                 viewRoles()
-                break;
+                break
             case "view all employees":
                 viewEmployees()
-                break;
+                break
+            case "add a department":
+                addDepartment()
+                break
         }
     }).catch(err => console.log(err))
 } 
 
-
-// return error for unknown urls 
-app.use((req, res) => {
-    res.status(404).end()
-})
-
-app.listen(PORT, () => {
-    console.log(`Server rendering on port ${PORT}!`)
-})
-
-// Start server after DB connection
-// db.connect(err => {
-//     if (err) throw err
-//     console.log('Database connected.')
-//     app.listen(PORT, () => {
-//       console.log(`Server running on port ${PORT}`)
-//     })
-// })
-
+// starts the app 
 promptUser()
