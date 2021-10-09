@@ -11,16 +11,19 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 
-viewDep = () => {
+viewDepartments = () => {
+    const sql = `SELECT * FROM departments`
 
-        const sql = `SELECT * FROM departments`
-    
-        db.query(sql, (err, rows) => {
-            if (err) {
-                return res.status(500).json({error: err.message})
-            }
-            console.table(rows)
-        })
+    db.query(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).json({error: err.message})
+        }
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        console.log("\nDEPARTMENTS:\n")
+        console.table(rows)
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        return promptUser()
+    })
 }
 
 
@@ -42,7 +45,7 @@ promptUser = () => {
     ]).then(answer => {
         switch(answer.mainList){
           case "view all departments":  
-             viewDep() 
+             viewDepartments() 
              break;
           case "view all roles":
              
