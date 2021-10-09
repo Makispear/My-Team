@@ -1,5 +1,6 @@
 const inquirer = require('inquirer')
 const db = require('./db/connection')
+const cTable = require('console.table');
 // const apiRoutes = require('./routes/apiRoutes')
 // EXPRESS
 const express = require('express')
@@ -10,10 +11,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 
-
 let choice = (answer) => {
     const options = {
-        "view all departments": viewDep(answer),
+        "view all departments": viewDep(),
         // "view all roles": viewDRoles(answer),
         // "view all employees": viewEmployees(answer),
         // "add a department": addDep(answer),
@@ -24,25 +24,38 @@ let choice = (answer) => {
     return options[answer];
 }
 
+
 viewDep = () => {
-    console.log('yes')
-}
-
-app.get('/api/departments', (req, res) => {
-    const sql = `SELECT * FROM departments`
-
-    db.query(sql, (err, rows) => {
-        if (err) {
-            return res.status(500).json({error: err.message})
-        }
-        return res.json({
-            message: 'success',
-            data: rows
+    app.get('/api/departments', (req, res) => {
+        const sql = `SELECT * FROM departments`
+    
+        db.query(sql, (err, rows) => {
+            if (err) {
+                return res.status(500).json({error: err.message})
+            }
+            return res.json({
+                message: 'success',
+                data: rows
+            })
         })
     })
-})
+}
 
-let promptUser = () => {
+// app.get('/api/departments', (req, res) => {
+//     const sql = `SELECT * FROM departments`
+
+//     db.query(sql, (err, rows) => {
+//         if (err) {
+//             return res.status(500).json({error: err.message})
+//         }
+//         return res.json({
+//             message: 'success',
+//             data: rows
+//         })
+//     })
+// })
+
+promptUser = () => {
     return inquirer.prompt([
         {
             name: 'mainList',
@@ -82,4 +95,4 @@ app.listen(PORT, () => {
 //     })
 // })
 
-// promptUser()
+promptUser()
