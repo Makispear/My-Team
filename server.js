@@ -26,6 +26,21 @@ viewDepartments = () => {
     })
 }
 
+viewRoles = () => {
+    const sql = `SELECT * FROM roles`
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).json({error: err.message})
+        }
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        console.log("\nRoles:\n")
+        console.table(rows)
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        return promptUser()
+    })
+}
+
 
 promptUser = () => {
     inquirer.prompt([
@@ -44,12 +59,12 @@ promptUser = () => {
         }
     ]).then(answer => {
         switch(answer.mainList){
-          case "view all departments":  
-             viewDepartments() 
-             break;
-          case "view all roles":
-             
-             break;
+            case "view all departments":  
+                viewDepartments() 
+                break;
+            case "view all roles":
+                viewRoles()
+                break;
         }
     }).catch(err => console.log(err))
 } 
