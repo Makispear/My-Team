@@ -41,6 +41,21 @@ viewRoles = () => {
     })
 }
 
+viewEmployees = () => {
+    const sql = `SELECT * FROM employees`
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).json({error: err.message})
+        }
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        console.log("\nEmployees:\n")
+        console.table(rows)
+        console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+        return promptUser()
+    })
+}
+
 
 promptUser = () => {
     inquirer.prompt([
@@ -64,6 +79,9 @@ promptUser = () => {
                 break;
             case "view all roles":
                 viewRoles()
+                break;
+            case "view all employees":
+                viewEmployees()
                 break;
         }
     }).catch(err => console.log(err))
