@@ -78,7 +78,64 @@ addDepartment = () => {
             return promptUser()
         })
     })
-   
+}
+
+addRole = () => {
+    inquirer.prompt([
+        {
+           name: 'roleName',
+           message: 'What is the name of the role you want to add?',
+           type: 'input', 
+           validate: answer => {
+               if (!answer) {
+                   return false
+               } else {
+                   return true
+               }
+           }
+        }, 
+        {
+            name: 'roleSalary',
+            message: 'What is the salary for this role?',
+            type: 'input',
+            validate: answer => {
+                if (!answer) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        },
+        {
+            name: 'roleDepartment',
+            message: 'What is the department for this role?',
+            type: 'input',
+            validate: answer => {
+                if (!answer) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+    ]).then(answer => {
+        const {roleName, roleSalary, roleDepartment} = answer
+
+        const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`
+        params = [roleName.trim(), roleSalary.trim(), roleDepartment.trim()]
+        
+        db.query(sql, params, (err, results) => {
+               if (err) {
+                return console.log(err.message)
+            }
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            console.log('You have successfully added a role')
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            return promptUser()
+        })
+    })
 }
 
 promptUser = () => {
@@ -109,6 +166,9 @@ promptUser = () => {
                 break
             case "add a department":
                 addDepartment()
+                break
+            case "add a role":
+                addRole()
                 break
         }
     }).catch(err => console.log(err))
