@@ -1,5 +1,5 @@
 const inquirer = require('inquirer')
-// const db = require('./db/connection')
+const db = require('./db/connection')
 // const apiRoutes = require('./routes/apiRoutes')
 // EXPRESS
 const express = require('express')
@@ -9,13 +9,37 @@ const PORT = process.env.PORT || 3001
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-// return error for unknown urls 
-app.use((req, res) => {
-    res.status(404).end()
-})
 
-app.listen(PORT, () => {
-    console.log(`Server rendering on port ${PORT}!`)
+
+let choice = (answer) => {
+    const options = {
+        "view all departments": viewDep(answer),
+        // "view all roles": viewDRoles(answer),
+        // "view all employees": viewEmployees(answer),
+        // "add a department": addDep(answer),
+        // "add a role": addRole(answer),
+        // "add an employee": viewDep(answer),
+        // "update an employee role": viewDep(answer)
+    };
+    return options[answer];
+}
+
+viewDep = () => {
+    console.log('yes')
+}
+
+app.get('/api/departments', (req, res) => {
+    const sql = `SELECT * FROM departments`
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).json({error: err.message})
+        }
+        return res.json({
+            message: 'success',
+            data: rows
+        })
+    })
 })
 
 let promptUser = () => {
@@ -31,13 +55,23 @@ let promptUser = () => {
                 "add a department",
                 "add a role",
                 "add an employee",
-                "update an employee role"
-            ]
+                "update an employee role"]
         }
-    ])
+    ]).then(answer => {
+        return choice(answer)
+    }).catch(err => console.log(err))
 } 
 
-promptUser()
+
+
+// return error for unknown urls 
+app.use((req, res) => {
+    res.status(404).end()
+})
+
+app.listen(PORT, () => {
+    console.log(`Server rendering on port ${PORT}!`)
+})
 
 // Start server after DB connection
 // db.connect(err => {
@@ -46,4 +80,6 @@ promptUser()
 //     app.listen(PORT, () => {
 //       console.log(`Server running on port ${PORT}`)
 //     })
-//   })
+// })
+
+// promptUser()
