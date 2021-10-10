@@ -205,13 +205,29 @@ addEmployee = () => {
     })
 }
 
+picker = () => {
+        const sql = `SELECT * FROM employees`
+
+        db.query(sql, (err, rows) => {
+            if (err) {
+                return console.log(err)
+            }
+            console.log(rows)
+            const empChoices = rows.map(({ first_name, last_name, role_id }) => ({
+                name: `${first_name} ${last_name}`,
+                value: role_id
+              }));
+              return empChoices
+        })
+}
+
 updateEmployeeRole = () => {
     inquirer.prompt([
         {
             message: 'Which employee do you want to update?',
             type: 'list',
             name: 'employeeSelector',
-            choices: ['1', '2', '3']
+            choices: [picker()]
         },
         {
             message: 'What role do you want to give this employee?',
