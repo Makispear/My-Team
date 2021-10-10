@@ -71,7 +71,6 @@ addDepartment = () => {
                 return console.log(err.message)
             }
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
-
             console.log('You have successfully added a department')
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
 
@@ -129,7 +128,6 @@ addRole = () => {
                 return console.log(err.message)
             }
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
-
             console.log('You have successfully added a role')
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
 
@@ -199,13 +197,48 @@ addEmployee = () => {
                 return console.log(err.message)
             }
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
-
             console.log('You have successfully added an employee')
             console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
 
             return promptUser()
         })
     })
+}
+
+updateEmployeeRole = () => {
+    inquirer.prompt([
+        {
+            message: 'Which employee do you want to update?',
+            type: 'list',
+            name: 'employeeSelector',
+            choices: ['1', '2', '3']
+        },
+        {
+            message: 'What role do you want to give this employee?',
+            type: 'list',
+            name: 'roleSelector',
+            choices: ['1', '2', '3']
+        }
+    ]).then(answers => {
+        const {employeeSelector, roleSelector} = answers
+        const sql = `UPDATE employees SET role_id = ? WHERE id = ?`
+        const params = [employeeSelector, roleSelector]
+
+        db.query(sql, params, (err, results) => {
+            if (err) {
+                return console.log(err)
+            }
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+            console.log('You have successfully updated an employee')
+            console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+
+            return promptUser()
+        })
+    })
+}
+
+leave = () => {
+    prompt.ui.close()
 }
 
 promptUser = () => {
@@ -221,7 +254,8 @@ promptUser = () => {
                 "add a department",
                 "add a role",
                 "add an employee",
-                "update an employee role"]
+                "update an employee role",
+                "(X) Exit Database"]
         }
     ]).then(answer => {
         switch(answer.mainList){
@@ -242,6 +276,15 @@ promptUser = () => {
                 break
             case "add an employee":
                 addEmployee()
+                break
+            case "update an employee role":
+                updateEmployeeRole()
+                break
+            case "(X) Exit Database":
+                console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
+                console.log('Bye! See you soon :)')
+                console.log('Press CTRL/Command + C to exit the command prompt!')
+                console.log("\nooooooooooooooooooooooooooooooooooooooooooooooooooooo\n")
                 break
         }
     }).catch(err => console.log(err))
