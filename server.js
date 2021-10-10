@@ -3,7 +3,7 @@ const cTable = require('console.table')
 const get = require('./lib/get')
 const add = require('./lib/add')
 const db = require('./db/connection')
-const update = require('./lib/update')
+const updateEmployeeRolePrompt = require('./lib/update')
 // const inputCheck = require('./utils/inputCheck')
 
 promptUser = () => {
@@ -43,7 +43,7 @@ promptUser = () => {
                 addEmployee()
                 break
             case "update an employee role":
-                updateEmployeeRole()
+                updateEmployeeRolePrompt()
                 break
         }
     }).catch(err => console.log(err))
