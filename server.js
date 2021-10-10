@@ -19,7 +19,8 @@ promptUser = () => {
                 "add a department",
                 "add a role",
                 "add an employee",
-                "update an employee role"
+                "update an employee role",
+                "(X) EXIT APPLICATION"
             ]
         }
     ]).then(answer => {
@@ -44,6 +45,9 @@ promptUser = () => {
                 break
             case "update an employee role":
                 updateEmployeeRolePrompt()
+                break
+            case "(X) EXIT APPLICATION":
+                db.end()
                 break
         }
     }).catch(err => console.log(err))
