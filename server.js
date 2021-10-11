@@ -1,9 +1,10 @@
 const inquirer = require('inquirer')
-const cTable = require('console.table')
-const get = require('./lib/get')
-const add = require('./lib/add')
+const read = require('./lib/read')
+const create = require('./lib/create')
 const db = require('./db/connection')
-const updateEmployeeRolePrompt = require('./lib/update')
+const update = require('./lib/update')
+const del = require('./lib/delete')
+const { updateEmployeeManager } = require('./intermediaries/get')
 // const inputCheck = require('./utils/inputCheck')
 
 promptUser = () => {
@@ -16,35 +17,51 @@ promptUser = () => {
                 "view all departments",
                 "view all roles",
                 "view all employees",
-                "add a department",
-                "add a role",
-                "add an employee",
-                "update an employee role",
+                "add department",
+                "add role",
+                "add employee",
+                "update employee role",
+                "update employee manager",
+                "delete employee",
+                "delete department",
+                "delete role",
                 "(X) EXIT APPLICATION"
             ]
         }
     ]).then(answer => {
         switch(answer.mainList){
             case "view all departments":  
-                viewDepartments() 
+                read.viewDepartments() 
                 break
             case "view all roles":
-                viewRoles()
+                read.viewRoles()
                 break
             case "view all employees":
-                viewEmployees()
+                read.viewEmployees()
                 break
-            case "add a department":
-                addDepartment()
+            case "add department":
+                create.addDepartment()
                 break
-            case "add a role":
-                addRole()
+            case "add role":
+                create.addRole()
                 break
-            case "add an employee":
-                addEmployee()
+            case "add employee":
+                create.addEmployee()
                 break
-            case "update an employee role":
-                updateEmployeeRolePrompt()
+            case "update employee role":
+                update.changeEmployeeRole()
+                break
+            case "update employee manager":
+                update.changeEmployeeManager()
+                break
+            case "delete employee":
+                deleteEmployeePrompt()
+                break
+            case "delete department":
+                deleteDepartmentPrompt()
+                break
+            case "delete role":
+                deleteRolePrompt()
                 break
             case "(X) EXIT APPLICATION":
                 db.end()
