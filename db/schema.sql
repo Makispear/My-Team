@@ -20,8 +20,6 @@ CREATE TABLE managers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30)
-    -- role VARCHAR(30),
-    -- CONSTRAINT fk_role2 FOREIGN KEY (role) REFERENCES roles(title)
 );
 
 CREATE TABLE employees (
