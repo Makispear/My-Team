@@ -18,11 +18,11 @@ VALUES
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-('JJ', 'MM', 1, NULL),
+('JJ', 'MM', 1, 1),
 ('MM', 'CCC', 2, 1),
-('AA', 'RR', 3, NULL),
-('KK', 'TT', 4, 3),
-('KK', 'SS', 5, NULL),
-('MM', 'BB', 6, 5),
-('SS', 'LL', 7, NULL),
-('TT', 'AA', 8, 7);
+('AA', 'RR', 3, 1),
+('KK', 'TT', 4, 1),
+('KK', 'SS', 5, 1),
+('MM', 'BB', 6, 1),
+('SS', 'LL', 7, 1),
+('TT', 'AA', 8, 1);

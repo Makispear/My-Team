@@ -17,6 +17,7 @@ promptUser = () => {
                 "view all departments",
                 "view all roles",
                 "view all employees",
+                "view employees by manager",
                 "add department",
                 "add role",
                 "add employee",
@@ -39,6 +40,9 @@ promptUser = () => {
             case "view all employees":
                 read.viewEmployees()
                 break
+            case "view employees by manager":
+                read.viewEmployeesByManager()
+                break
             case "add department":
                 create.addDepartment()
                 break
@@ -55,13 +59,13 @@ promptUser = () => {
                 update.changeEmployeeManager()
                 break
             case "delete employee":
-                deleteEmployeePrompt()
+                del.deleteEmployeePrompt()
                 break
             case "delete department":
-                deleteDepartmentPrompt()
+                del.deleteDepartmentPrompt()
                 break
             case "delete role":
-                deleteRolePrompt()
+                del.deleteRolePrompt()
                 break
             case "(X) EXIT APPLICATION":
                 db.end()

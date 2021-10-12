@@ -1,6 +1,6 @@
+DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS departments;
-DROP TABLE IF EXISTS employees;
 
 CREATE TABLE departments (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -8,7 +8,7 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE roles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,  
     title VARCHAR(30) UNIQUE DEFAULT NULL,
     salary NUMERIC(6) DEFAULT NULL,
     department_id INT DEFAULT Null,
