@@ -16,9 +16,14 @@ VALUES
 ('Legal Team Lead', 250000, 4),
 ('Lawyer', 190000, 4);
 
+INSERT INTO managers (first_name, last_name)
+VALUES
+('JJ', 'MM');
+
+
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-('JJ', 'MM', 1, 1),
+('JJ', 'MM', 1, NULL),
 ('MM', 'CCC', 2, 1),
 ('AA', 'RR', 3, 1),
 ('KK', 'TT', 4, 1),
