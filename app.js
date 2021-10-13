@@ -4,8 +4,7 @@ const create = require('./lib/create')
 const db = require('./db/connection')
 const update = require('./lib/update')
 const del = require('./lib/delete')
-const { updateEmployeeManager } = require('./intermediaries/get')
-// const inputCheck = require('./utils/inputCheck')
+const get = require('./intermediaries/get')
 
 promptUser = () => {
     inquirer.prompt([
@@ -18,6 +17,8 @@ promptUser = () => {
                 "view all roles",
                 "view all employees",
                 "view employees by manager",
+                "view employees by department",
+                "view budget",
                 "add department",
                 "add role",
                 "add employee",
@@ -42,6 +43,12 @@ promptUser = () => {
                 break
             case "view employees by manager":
                 read.viewEmployeesByManager()
+                break
+            case "view employees by department":
+                read.viewEmployeesByDepartment()
+                break
+            case "view budget":
+                read.getBudget()
                 break
             case "add department":
                 create.addDepartment()
