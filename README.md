@@ -35,7 +35,7 @@ If you want to check employees by manager or the budget for a specific branch, y
 
 ## Guidance 
 
-* if you're a visual learner like me, I have a video demonstrating how the app works right [here](https://drive.google.com/file/d/1o8IZftFWqU_vv8reMliil4zm8SCkrKBU/view?usp=sharing)
+* if you're a visual learner like me, I have a video demonstrating how the app works right [here](https://drive.google.com/file/d/1o8IZftFWqU_vv8reMliil4zm8SCkrKBU/view)
 
 ## links 
 - [My Team Repository](https://github.com/Makispear/My-Team)
